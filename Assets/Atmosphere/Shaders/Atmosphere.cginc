@@ -35,9 +35,9 @@
 
 // -------------------------------------
 // Coefficients
-#define C_RAYLEIGH			float3(5.802, 13.558, 33.100) * 1e-6
-#define C_MIE				float3(3.996,  3.996,  3.996) * 1e-6
-#define C_OZONE				float3(0.650,  1.881,  0.085) * 1e-6
+#define C_RAYLEIGH			(float3(5.802, 13.558, 33.100) * 1e-6)
+#define C_MIE				(float3(3.996,  3.996,  3.996) * 1e-6)
+#define C_OZONE				(float3(0.650,  1.881,  0.085) * 1e-6)
 
 #define ATMOSPHERE_DENSITY	1
 #define EXPOSURE			20
@@ -92,11 +92,11 @@ float AtmosphereHeight (float3 positionWS)
 }
 float DensityRayleigh (float h)
 {
-	return exp(-h / RAYLEIGH_HEIGHT);
+	return exp(-max(0, h / RAYLEIGH_HEIGHT));
 }
 float DensityMie (float h)
 {
-	return exp(-h / MIE_HEIGHT);
+	return exp(-max(0, h / MIE_HEIGHT));
 }
 float DensityOzone (float h)
 {
@@ -149,7 +149,7 @@ float3 IntegrateScattering (float3 rayStart, float3 rayDir, float rayLength, flo
 	// We can reduce the number of atmospheric samples required to converge by spacing them exponentially closer to the camera.
 	// This breaks space view however, so let's compensate for that with an exponent that "fades" to 1 as we leave the atmosphere.
 	float  rayHeight = AtmosphereHeight(rayStart);
-	float  sampleDistributionExponent = 1 + saturate(1 - rayHeight / ATMOSPHERE_HEIGHT) * 8;
+	float  sampleDistributionExponent = 1 + saturate(1 - rayHeight / ATMOSPHERE_HEIGHT) * 8; // Slightly arbitrary max exponent of 9
 
 	float2 intersection = AtmosphereIntersection(rayStart, rayDir);
 	rayLength = min(rayLength, intersection.y);

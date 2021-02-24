@@ -73,10 +73,6 @@ Shader "Atmosphere/Object"
 			{
 				UNITY_SETUP_INSTANCE_ID(i);
 
-				// Planet intersection
-				if (AtmosphereHeight(i.worldPos) < 0)
-					discard;
-
 				float3 rayStart = _WorldSpaceCameraPos;
 				float3 rayDir = _WorldSpaceCameraPos - i.worldPos;
 				float  rayLength = length(rayDir);

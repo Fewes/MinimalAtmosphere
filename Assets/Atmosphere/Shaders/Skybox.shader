@@ -21,6 +21,10 @@
 
 Shader "Atmosphere/Skybox"
 {
+	Properties
+	{
+		[Toggle] _DrawPlanet ("Draw Planet", Float) = 1
+	}
 	SubShader
 	{
 		Tags { "RenderType"="Background" "Queue"="Background" }
@@ -38,6 +42,8 @@ Shader "Atmosphere/Skybox"
 			#include "UnityCG.cginc"
 			#include "Lighting.cginc"
 			#include "Atmosphere.cginc"
+
+			float _DrawPlanet;
 
 			struct appdata_t
 			{
@@ -75,9 +81,12 @@ Shader "Atmosphere/Skybox"
 				float3 rayDir    = normalize(i.worldPos - _WorldSpaceCameraPos);
 				float  rayLength = INFINITY;
 
-				float2 planetIntersection = PlanetIntersection(rayStart, rayDir);
-				if (planetIntersection.x > 0)
-					rayLength = min(rayLength, planetIntersection.x);
+				if (_DrawPlanet == 1.0)
+				{
+					float2 planetIntersection = PlanetIntersection(rayStart, rayDir);
+					if (planetIntersection.x > 0)
+						rayLength = min(rayLength, planetIntersection.x);
+				}
 
 				float3 lightDir   = _WorldSpaceLightPos0.xyz;
 				float3 lightColor = _LightColor0.xyz;
