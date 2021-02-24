@@ -1,4 +1,4 @@
-![Preview shots][Preview]
+![Preview shots](Preview.jpg)
 
 # MinimalAtmosphere
 A minimal (single cginc file) atmospheric scattering implementation for Unity to use as a base for further work and as a reference for anyone wanting to learn. Includes a simple skybox and object shader. No optimizations are used and so it probably should not be used in an actual application.
