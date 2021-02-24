@@ -146,7 +146,7 @@ float3 Absorb (float3 opticalDepth)
 // Also return the transmittance for the same ray as we are already calculating the optical depth anyway.
 float3 IntegrateScattering (float3 rayStart, float3 rayDir, float rayLength, float3 lightDir, float3 lightColor, out float3 transmittance)
 {
-	// We can reduce the number of atmospheric sampels required to converge by spacing them exponentially closer to the camera.
+	// We can reduce the number of atmospheric samples required to converge by spacing them exponentially closer to the camera.
 	// This breaks space view however, so let's compensate for that with an exponent that "fades" to 1 as we leave the atmosphere.
 	float  rayHeight = AtmosphereHeight(rayStart);
 	float  sampleDistributionExponent = 1 + saturate(1 - rayHeight / ATMOSPHERE_HEIGHT) * 8;
