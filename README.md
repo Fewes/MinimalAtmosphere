@@ -6,3 +6,6 @@ A minimal (single cginc file) atmospheric scattering implementation for Unity to
 Supports Rayleigh and Mie scattering (single) + ozone absorption. The object shader also shows how atmospheric transmittance can be used to attenuate the directional light (planet shadow).
 
 The project is using URP (just to get screen tonemapping and dithering) but you can export the atmosphere part to any pipeline, just grab the Atmosphere directory from Assets.
+
+# Recommended reading
+[A Scalable and Production Ready Sky and Atmosphere Rendering Technique](https://sebh.github.io/publications/egsr2020.pdf)

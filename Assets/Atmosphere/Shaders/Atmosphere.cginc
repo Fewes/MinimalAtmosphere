@@ -100,6 +100,7 @@ float DensityMie (float h)
 }
 float DensityOzone (float h)
 {
+	// Ozone is represented as a tent function with a width of 30km, centered around an altitude of 25km.
 	return max(0, 1 - abs(h - 25000.0) / 15000.0);
 }
 float3 AtmosphereDensity (float h)
