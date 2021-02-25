@@ -100,7 +100,7 @@ float DensityMie (float h)
 }
 float DensityOzone (float h)
 {
-	// Ozone is represented as a tent function with a width of 30km, centered around an altitude of 25km.
+	// The ozone layer is represented as a tent function with a width of 30km, centered around an altitude of 25km.
 	return max(0, 1 - abs(h - 25000.0) / 15000.0);
 }
 float3 AtmosphereDensity (float h)
@@ -138,7 +138,7 @@ float3 IntegrateOpticalDepth (float3 rayStart, float3 rayDir)
 // Calculate a luminance transmittance value from optical depth.
 float3 Absorb (float3 opticalDepth)
 {
-	// Note that Mie results in slightly more light absorption than scattering, hence * 1.1
+	// Note that Mie results in slightly more light absorption than scattering, about 10%
 	return exp(-(opticalDepth.x * C_RAYLEIGH + opticalDepth.y * C_MIE * 1.1 + opticalDepth.z * C_OZONE) * ATMOSPHERE_DENSITY);
 }
 
