@@ -1,7 +1,8 @@
 ![Preview shots](Preview.jpg)
 
 # MinimalAtmosphere
-A minimal (single cginc file) atmospheric scattering implementation for Unity to use as a base for further work and as a reference for anyone wanting to learn. Includes a simple skybox and object shader. No optimizations are implemented and so it probably should not be used in an actual application. Above all else, this repository aims to be easy to understand. Although implemented in Unity, the shader file does not make use of any Unity-specific code and so can be ported very easily.
+A minimal (single cginc file) atmospheric scattering implementation for Unity to use as a base for further work and as a reference for anyone wanting to learn. Includes a simple skybox and object shader. No optimizations are implemented and so it probably should not be used in an actual application.
+Above all else, this repository aims to be easy to understand, and although implemented in Unity, the shader file does not make use of any Unity-specific code, meaning it can be ported easily.
 
 Supports Rayleigh and Mie (single) scattering + ozone absorption. The object shader also shows how atmospheric transmittance can be used to attenuate the directional light (planet shadow).
 
