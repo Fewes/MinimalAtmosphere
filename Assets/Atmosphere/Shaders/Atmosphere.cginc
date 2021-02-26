@@ -24,23 +24,23 @@
 
 // -------------------------------------
 // Defines
-#define EPS					1e-6
-#define PI					3.14159265359
-#define INFINITY 			1.0 / 0.0
-#define PLANET_RADIUS		6371000
-#define PLANET_CENTER		float3(0, -PLANET_RADIUS, 0)
-#define ATMOSPHERE_HEIGHT	100000
-#define RAYLEIGH_HEIGHT		(ATMOSPHERE_HEIGHT * 0.08)
-#define MIE_HEIGHT			(ATMOSPHERE_HEIGHT * 0.012)
+#define EPS                 1e-6
+#define PI                  3.14159265359
+#define INFINITY            1.0 / 0.0
+#define PLANET_RADIUS       6371000
+#define PLANET_CENTER       float3(0, -PLANET_RADIUS, 0)
+#define ATMOSPHERE_HEIGHT   100000
+#define RAYLEIGH_HEIGHT     (ATMOSPHERE_HEIGHT * 0.08)
+#define MIE_HEIGHT          (ATMOSPHERE_HEIGHT * 0.012)
 
 // -------------------------------------
 // Coefficients
-#define C_RAYLEIGH			(float3(5.802, 13.558, 33.100) * 1e-6)
-#define C_MIE				(float3(3.996,  3.996,  3.996) * 1e-6)
-#define C_OZONE				(float3(0.650,  1.881,  0.085) * 1e-6)
+#define C_RAYLEIGH          (float3(5.802, 13.558, 33.100) * 1e-6)
+#define C_MIE               (float3(3.996,  3.996,  3.996) * 1e-6)
+#define C_OZONE             (float3(0.650,  1.881,  0.085) * 1e-6)
 
-#define ATMOSPHERE_DENSITY	1
-#define EXPOSURE			20
+#define ATMOSPHERE_DENSITY  1
+#define EXPOSURE            20
 
 // -------------------------------------
 // Math
@@ -166,7 +166,7 @@ float3 IntegrateScattering (float3 rayStart, float3 rayDir, float rayLength, flo
 	float3 rayleigh = 0;
 	float3 mie      = 0;
 
-	int    sampleCount = 64;
+	int    sampleCount  = 64;
 	float3 opticalDepth = 0;
 	
 	float prevRayTime = 0;
