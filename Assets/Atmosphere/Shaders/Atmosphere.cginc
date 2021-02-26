@@ -121,6 +121,7 @@ float3 IntegrateOpticalDepth (float3 rayStart, float3 rayDir)
 
 	int    sampleCount  = 8;
 	float  stepSize     = rayLength / sampleCount;
+	
 	float3 opticalDepth = 0;
 
 	for (int i = 0; i < sampleCount; i++)
@@ -160,16 +161,18 @@ float3 IntegrateScattering (float3 rayStart, float3 rayDir, float rayLength, flo
 		rayLength -= intersection.x;
 	}
 
-	float  costh     = dot(rayDir, lightDir);
-	float  phaseRayleigh = PhaseRayleigh(costh);
-	float  phaseMie = PhaseMie(costh);
-	float3 rayleigh = 0;
-	float3 mie      = 0;
+	float  costh    = dot(rayDir, lightDir);
+	float  phaseR   = PhaseRayleigh(costh);
+	float  phaseM   = PhaseMie(costh);
 
 	int    sampleCount  = 64;
+
 	float3 opticalDepth = 0;
-	
-	float prevRayTime = 0;
+	float3 rayleigh     = 0;
+	float3 mie          = 0;
+
+	float  prevRayTime  = 0;
+
 	for (int i = 0; i < sampleCount; i++)
 	{
 		float  rayTime = pow((float)i / sampleCount, sampleDistributionExponent) * rayLength;
@@ -185,8 +188,8 @@ float3 IntegrateScattering (float3 rayStart, float3 rayDir, float rayLength, flo
 		float3 opticalDepthlight  = IntegrateOpticalDepth(localPosition, lightDir);
 		float3 lightTransmittance = Absorb(opticalDepth + opticalDepthlight);
 
-		rayleigh += lightTransmittance * phaseRayleigh * localDensity.x;
-		mie      += lightTransmittance * phaseMie      * localDensity.y;
+		rayleigh += lightTransmittance * phaseR * localDensity.x;
+		mie      += lightTransmittance * phaseM * localDensity.y;
 
 		prevRayTime = rayTime;
 	}
