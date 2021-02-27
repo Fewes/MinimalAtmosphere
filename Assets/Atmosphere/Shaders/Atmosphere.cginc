@@ -128,9 +128,9 @@ float3 IntegrateOpticalDepth (float3 rayStart, float3 rayDir)
 	{
 		float3 localPosition = rayStart + rayDir * (i + 0.5) * stepSize;
 		float  localHeight   = AtmosphereHeight(localPosition);
-		float3 localDensity  = AtmosphereDensity(localHeight) * stepSize;
+		float3 localDensity  = AtmosphereDensity(localHeight);
 
-		opticalDepth += localDensity;
+		opticalDepth += localDensity * stepSize;
 	}
 
 	return opticalDepth;
@@ -181,15 +181,19 @@ float3 IntegrateScattering (float3 rayStart, float3 rayDir, float rayLength, flo
 
 		float3 localPosition = rayStart + rayDir * rayTime;
 		float  localHeight   = AtmosphereHeight(localPosition);
-		float3 localDensity  = AtmosphereDensity(localHeight) * stepSize;
+		float3 localDensity  = AtmosphereDensity(localHeight);
 
-		opticalDepth += localDensity;
+		opticalDepth += localDensity * stepSize;
+
+		// The atmospheric transmittance from rayStart to localPosition
+		float3 viewTransmittance = Absorb(opticalDepth);
 
 		float3 opticalDepthlight  = IntegrateOpticalDepth(localPosition, lightDir);
-		float3 lightTransmittance = Absorb(opticalDepth + opticalDepthlight);
+		// The atmospheric transmittance of light reaching localPosition
+		float3 lightTransmittance = Absorb(opticalDepthlight);
 
-		rayleigh += lightTransmittance * phaseR * localDensity.x;
-		mie      += lightTransmittance * phaseM * localDensity.y;
+		rayleigh += viewTransmittance * lightTransmittance * phaseR * localDensity.x * stepSize;
+		mie      += viewTransmittance * lightTransmittance * phaseM * localDensity.y * stepSize;
 
 		prevRayTime = rayTime;
 	}
